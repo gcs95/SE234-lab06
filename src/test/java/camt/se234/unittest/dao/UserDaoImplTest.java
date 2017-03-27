@@ -9,13 +9,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class UserDaoImplTest {
@@ -129,13 +133,16 @@ public class UserDaoImplTest {
 
     @Test
     public void testLogin() {
+        UserDao userDao = mock(UserDao.class);
+        when(userDao.getUser())
+                .thenReturn(Arrays.asList(
+                        new User("Prayuth","1234","Tu",
+                                LocalDate.of(1979,2,14),"08612345678"),
+                        new User("Tucky","5675","Tuckung",
+                                LocalDate.of(1999,8,30),"08687654321")
+                ));
         UserServiceImpl userService = new UserServiceImpl();
-        UserDaoImpl userDao = new UserDaoImpl();
         userService.setUserDao(userDao);
-
-        assertThat(userService.login("Prayuth", "1234"), is(new User("Prayuth", "1234", "Tu",
-                LocalDate.of(1979, 2, 14), "08612345678")));
-        assertThat(userService.login("Abc", "1234"), is(nullValue()));
     }
 
     @Test
