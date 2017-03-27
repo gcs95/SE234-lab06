@@ -25,8 +25,21 @@ import static org.mockito.Mockito.when;
 public class UserDaoImplTest {
     @Test
     public void testGetUsers() {
-        UserDaoImpl userDao = new UserDaoImpl();
-        assertThat(userDao.getUsers(),
+        UserDao userDao = mock(UserDao.class);
+
+        when(userDao.getUser())
+                .thenReturn(Arrays.asList(
+                        new User("Prayuth", "1234", "Tu",
+                                LocalDate.of(1979, 2, 14), "08612345678"),
+                        new User("Tucky", "5675", "Tuckung",
+                                LocalDate.of(1999, 8, 30), "08687654321"),
+                        new User("Honey", "aabbcc", "Honey",
+                                LocalDate.of(2012, 11, 13), "0000000000"),
+                        new User("None", "none", "NoName",
+                                LocalDate.of(2112, 1, 1), "9999999999")
+                ));
+
+        assertThat(userDao.getUser(),
                 hasItems(new User("Prayuth", "1234", "Tu",
                                 LocalDate.of(1979, 2, 14), "08612345678"),
                         new User("Tucky", "5675", "Tuckung",
@@ -35,10 +48,9 @@ public class UserDaoImplTest {
                                 LocalDate.of(2012, 11, 13), "0000000000"),
                         new User("None", "none", "NoName",
                                 LocalDate.of(2112, 1, 1), "9999999999")
-
                 ));
 
-        assertThat(userDao.getUsers(),
+        assertThat(userDao.getUser(),
                 contains(new User("Prayuth", "1234", "Tu",
                                 LocalDate.of(1979, 2, 14), "08612345678"),
                         new User("Tucky", "5675", "Tuckung",
@@ -46,75 +58,22 @@ public class UserDaoImplTest {
                         new User("Honey", "aabbcc", "Honey",
                                 LocalDate.of(2012, 11, 13), "0000000000"),
                         new User("None", "none", "NoName",
-                                LocalDate.of(2112, 1, 1), "9999999999"),
-
-                        new User("Baibai", "5678", "Thanya",
-                                LocalDate.of(1997, 5, 12), "0899994567"),
-                        new User("Fernfern", "rrtg", "Tommy",
-                                LocalDate.of(1990, 3, 8), "0892374567"),
-                        new User("Neena", "love55", "Collept",
-                                LocalDate.of(1999, 1, 30), "0899994567"),
-                        new User("Sora", "horizon", "Aryami",
-                                LocalDate.of(2001, 6, 4), "0899994567"),
-
-                        new User("Gaanploo", "1111", "Myla",
-                                LocalDate.of(1995, 10, 30), "0234567890"),
-                        new User("Baifern", "5555", "Fern",
-                                LocalDate.of(1996, 12, 25), "0111111111"),
-                        new User("Bob", "qwerty", "Bob",
-                                LocalDate.of(2055, 1, 16), "0004400000"),
-                        new User("Hello", "none", "Oldman",
-                                LocalDate.of(1915, 1, 10), "9992354999"),
-
-                        new User("Nora", "nilnil", "Vicheka",
-                                LocalDate.of(1995, 11, 01), "09367862666"),
-                        new User("Jack", "jackpot001", "Jack The Giant Slayer",
-                                LocalDate.of(1989, 03, 27), "00145739859"),
-                        new User("Belle", "belly991", "Princess Belle",
-                                LocalDate.of(1990, 01, 01), "00912323423"),
-                        new User("Vathanaka", "3434V", "Chan",
-                                LocalDate.of(1995, 04, 30), "01234348569")
-
+                                LocalDate.of(2112, 1, 1), "9999999999")
                 ));
-        assertThat(userDao.getUsers(),
+
+        assertThat(userDao.getUser(),
                 containsInAnyOrder(new User("Prayuth", "1234", "Tu",
                                 LocalDate.of(1979, 2, 14), "08612345678"),
                         new User("Tucky", "5675", "Tuckung",
                                 LocalDate.of(1999, 8, 30), "08687654321"),
-                        new User("Honey", "aabbcc", "Honey",
-                                LocalDate.of(2012, 11, 13), "0000000000"),
                         new User("None", "none", "NoName",
                                 LocalDate.of(2112, 1, 1), "9999999999"),
-
-                        new User("Baibai", "5678", "Thanya",
-                                LocalDate.of(1997, 5, 12), "0899994567"),
-                        new User("Fernfern", "rrtg", "Tommy",
-                                LocalDate.of(1990, 3, 8), "0892374567"),
-                        new User("Neena", "love55", "Collept",
-                                LocalDate.of(1999, 1, 30), "0899994567"),
-                        new User("Sora", "horizon", "Aryami",
-                                LocalDate.of(2001, 6, 4), "0899994567"),
-
-                        new User("Gaanploo", "1111", "Myla",
-                                LocalDate.of(1995, 10, 30), "0234567890"),
-                        new User("Baifern", "5555", "Fern",
-                                LocalDate.of(1996, 12, 25), "0111111111"),
-                        new User("Bob", "qwerty", "Bob",
-                                LocalDate.of(2055, 1, 16), "0004400000"),
-                        new User("Hello", "none", "Oldman",
-                                LocalDate.of(1915, 1, 10), "9992354999"),
-
-                        new User("Nora", "nilnil", "Vicheka",
-                                LocalDate.of(1995, 11, 01), "09367862666"),
-                        new User("Jack", "jackpot001", "Jack The Giant Slayer",
-                                LocalDate.of(1989, 03, 27), "00145739859"),
-                        new User("Belle", "belly991", "Princess Belle",
-                                LocalDate.of(1990, 01, 01), "00912323423"),
-                        new User("Vathanaka", "3434V", "Chan",
-                                LocalDate.of(1995, 04, 30), "01234348569")
-
+                        new User("Honey", "aabbcc", "Honey",
+                                LocalDate.of(2012, 11, 13), "0000000000")
                 ));
 
+        UserServiceImpl userService = new UserServiceImpl();
+        userService.setUserDao(userDao);
     }
 
     @Test
