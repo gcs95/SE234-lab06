@@ -30,7 +30,18 @@
             <artifactId>guava</artifactId>
             <version>21.0</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/pl.pragmatists/JUnitParams -->
+        <dependency>
+            <groupId>pl.pragmatists</groupId>
+            <artifactId>JUnitParams</artifactId>
+            <version>0.9.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
